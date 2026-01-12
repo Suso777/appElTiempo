@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiempo en mi zona</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>El tiempo en mi zona</h1>
+    <p id="location-name">Carballo, Galicia</p>
+  </header>
+
+  <main class="app-main">
+    <!-- Tiempo actual -->
+    <section class="card current-weather" id="current-weather">
+      <h2>Ahora mismo</h2>
+      <p class="temp" id="current-temp">--°C</p>
+      <p id="current-description">Cargando...</p>
+      <p class="extra" id="current-extra">Viento: -- km/h</p>
+      <p class="updated" id="last-updated">Actualizado: --</p>
+    </section>
+
+    <!-- Próximas horas -->
+    <section class="card" id="hourly-forecast">
+      <h2>Próximas horas</h2>
+      <div class="hours-container" id="hours-container">
+        <!-- Tarjetas de horas generadas con JS -->
+      </div>
+    </section>
+
+    <!-- Próximos días -->
+    <section class="card" id="daily-forecast">
+      <h2>Próximos días</h2>
+      <div class="days-container" id="days-container">
+        <!-- Tarjetas de días generadas con JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Datos de <a href="https://open-meteo.com" target="_blank">Open-Meteo</a></p>
+    <p>Desarrollado por [Tu nombre]</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
