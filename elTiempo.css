@@ -1,0 +1,162 @@
+:root {
+  --bg-color: #0f172a;
+  --card-color: #111827;
+  --accent: #38bdf8;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #1f2937, #020617 55%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  padding: 1.5rem 1rem 0.5rem;
+  text-align: center;
+}
+
+.app-header h1 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.app-header p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.app-main {
+  flex: 1;
+  padding: 0.5rem 1rem 1rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: rgba(15, 23, 42, 0.9);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.card h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+}
+
+.current-weather {
+  text-align: center;
+  background: linear-gradient(135deg, #0f172a, #0369a1);
+}
+
+.current-weather .temp {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.current-weather .extra,
+.current-weather .updated {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+#current-description {
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+/* Próximas horas: scroll horizontal en móvil */
+.hours-container {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.2rem;
+}
+
+.hour-card {
+  min-width: 70px;
+  padding: 0.5rem;
+  border-radius: 12px;
+  background-color: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  text-align: center;
+}
+
+.hour-time {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.hour-temp {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Próximos días */
+.days-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.day-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #020617;
+  border-radius: 12px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.day-name {
+  font-size: 0.9rem;
+}
+
+.day-temp {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Footer */
+.app-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 0.75rem 0.5rem 1rem;
+}
+
+.app-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* Un poco mejor en pantallas algo más grandes */
+@media (min-width: 640px) {
+  .app-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .current-weather .temp {
+    font-size: 3.5rem;
+  }
+}
