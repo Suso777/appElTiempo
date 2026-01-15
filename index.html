@@ -3,12 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tiempo en mi zona</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <title>O TEMPO</title>
+  <link rel="stylesheet" href="elTiempo.css" />
 </head>
 <body>
+  <div class="video-background">
+  <video autoplay muted loop playsinline>
+    <source src="videoEla.mp4" type="video/mp4">
+  </video>
+</div>
+
+<div class="contenido">
+  <!-- Aquí va tu interfaz meteorológica -->
+</div>
   <header class="app-header">
-    <h1>El tiempo en mi zona</h1>
+    <h1>O TEMPO</h1>
     <p id="location-name">Carballo, Galicia</p>
   </header>
 
@@ -41,9 +50,9 @@
 
   <footer class="app-footer">
     <p>Datos de <a href="https://open-meteo.com" target="_blank">Open-Meteo</a></p>
-    <p>Desarrollado por [Tu nombre]</p>
+    <p>Desarrollado por Suso</p>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="elTiempo.js"></script>
 </body>
 </html>
