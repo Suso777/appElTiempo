@@ -1,0 +1,23 @@
+<svg class="app-logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Círculo exterior del sol -->
+  <circle cx="32" cy="32" r="18" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Núcleo del sol -->
+  <circle cx="32" cy="32" r="10" fill="currentColor" opacity="0.8"/>
+  
+  <!-- Rayos del sol animados -->
+  <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <line x1="32" y1="6" x2="32" y2="2" opacity="0.8"/>
+    <line x1="32" y1="62" x2="32" y2="58" opacity="0.8"/>
+    <line x1="6" y1="32" x2="2" y2="32" opacity="0.8"/>
+    <line x1="62" y1="32" x2="58" y2="32" opacity="0.8"/>
+    <line x1="13" y1="13" x2="10" y2="10" opacity="0.6"/>
+    <line x1="54" y1="54" x2="51" y2="51" opacity="0.6"/>
+    <line x1="51" y1="13" x2="54" y2="10" opacity="0.6"/>
+    <line x1="10" y1="54" x2="13" y2="51" opacity="0.6"/>
+  </g>
+  
+  <!-- Onda de aire (elemento dinámico) -->
+  <path d="M 32 42 Q 25 38 20 42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 32 48 Q 22 44 15 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+</svg>

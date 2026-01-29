@@ -1,4 +1,3 @@
-// Coordenadas de Carballo aproximadas
 const LATITUDE = 43.213;
 const LONGITUDE = -8.689;
 
@@ -10,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCarouselControls();
 });
 
-// Configurar controles del carrusel
 function setupCarouselControls() {
   const prevBtn = document.getElementById("prev-hour");
   const nextBtn = document.getElementById("next-hour");
@@ -27,18 +25,18 @@ function setupCarouselControls() {
   }
 }
 
-// Reproducir audio de fondo
 function initializeAudio() {
   const bgAudio = document.getElementById("bg-audio");
-  bgAudio.volume = 0.5; // Volumen al 50%
-  
-  // Reproducir automáticamente (puede ser bloqueado por el navegador)
+  bgAudio.volume = 0.5;
+
   bgAudio.play().catch(() => {
-    // Si el navegador bloquea reproducción automática, reproducir al hacer click
-    document.addEventListener("click", () => {
-      bgAudio.play();
-      console.log("Audio iniciado por click del usuario");
-    }, { once: true });
+    document.addEventListener(
+      "click",
+      () => {
+        bgAudio.play();
+      },
+      { once: true }
+    );
   });
 }
 
@@ -61,7 +59,6 @@ async function fetchWeather() {
 
 function renderCurrentWeather(data) {
   const current = data.current_weather;
-  const daily = data.daily;
 
   const tempElement = document.getElementById("current-temp");
   const descElement = document.getElementById("current-description");
@@ -74,7 +71,6 @@ function renderCurrentWeather(data) {
   updatedElement.textContent = `Actualizado: ${formatTime(current.time)}`;
 }
 
-// Próximas horas (por ejemplo, 12 horas desde la actual)
 function renderHourlyForecast(data) {
   const container = document.getElementById("hours-container");
   container.innerHTML = "";
@@ -83,11 +79,9 @@ function renderHourlyForecast(data) {
   const temps = data.hourly.temperature_2m;
   const codes = data.hourly.weathercode;
 
-  // Obtener la hora actual en formato ISO
   const currentTime = new Date(data.current_weather.time);
-  const currentHourISO = currentTime.toISOString().substring(0, 13) + ":00"; // Formato: "2025-01-29T14:00"
+  const currentHourISO = currentTime.toISOString().substring(0, 13) + ":00";
 
-  // Encontrar el índice más cercano a la hora actual
   let startIndex = 0;
   for (let i = 0; i < times.length; i++) {
     if (times[i] >= currentHourISO) {
@@ -98,11 +92,7 @@ function renderHourlyForecast(data) {
 
   const hoursToShow = 12;
 
-  for (
-    let i = startIndex;
-    i < startIndex + hoursToShow && i < times.length;
-    i++
-  ) {
+  for (let i = startIndex; i < startIndex + hoursToShow && i < times.length; i++) {
     const hourCard = document.createElement("div");
     hourCard.classList.add("hour-card");
 
@@ -125,7 +115,6 @@ function renderHourlyForecast(data) {
   }
 }
 
-// Próximos días (por ejemplo, 5 días)
 function renderDailyForecast(data) {
   const container = document.getElementById("days-container");
   container.innerHTML = "";
@@ -167,8 +156,6 @@ function showErrorMessage() {
   current.textContent = "No se ha podido cargar el tiempo.";
 }
 
-// Funciones auxiliares de formato
-
 function formatTime(isoString) {
   const date = new Date(isoString);
   return date.toLocaleString("es-ES", {
@@ -193,7 +180,6 @@ function formatDayName(isoString, isToday) {
   });
 }
 
-// Mapeo sencillo de códigos de tiempo de Open-Meteo
 function mapWeatherCodeToText(code) {
   const map = {
     0: "Despejado",
@@ -222,7 +208,6 @@ function mapWeatherCodeToText(code) {
   return map[code] || "Condición desconocida";
 }
 
-// Versión muy corta para poner un icono/emoji en próximas horas
 function getShortIcon(code) {
   if (code === 0) return "☀️";
   if ([1, 2].includes(code)) return "🌤️";

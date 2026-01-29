@@ -19,7 +19,8 @@ html {
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   background: radial-gradient(circle at top, #1f2937, #020617 55%);
   color: var(--text-main);
   min-height: 100vh;
@@ -28,7 +29,6 @@ body {
   overflow-x: hidden;
 }
 
-/* VIDEO BACKGROUND */
 .video-background {
   position: fixed;
   top: 0;
@@ -50,13 +50,25 @@ body {
   display: none;
 }
 
-.contenido {
-  position: relative;
-  z-index: 1;
-  color: white;
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
-/* HEADER */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .app-header {
   padding: 1.25rem 1rem 0.75rem;
   text-align: center;
@@ -85,24 +97,6 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .header-text {
   text-align: center;
 }
@@ -111,8 +105,7 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.5px;
-  margin-bottom: 0.25rem;
-  margin: 0;
+  margin: 0 0 0.25rem 0;
 }
 
 .app-header p {
@@ -122,7 +115,6 @@ body {
   margin: 0;
 }
 
-/* MAIN CONTENT */
 .app-main {
   flex: 1;
   padding: 1rem;
@@ -141,7 +133,6 @@ body {
   }
 }
 
-/* CARDS */
 .card {
   background-color: rgba(15, 23, 42, 0.85);
   border-radius: var(--radius);
@@ -162,10 +153,13 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* CURRENT WEATHER */
 .current-weather {
   text-align: center;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(3, 105, 161, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.9),
+    rgba(3, 105, 161, 0.8)
+  );
   padding: 1.5rem 1.25rem;
 }
 
@@ -193,7 +187,6 @@ body {
   margin-top: 0.5rem;
 }
 
-/* CAROUSEL HEADER */
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -251,7 +244,6 @@ body {
   stroke-linejoin: round;
 }
 
-/* HOURLY CAROUSEL */
 .hours-container {
   display: flex;
   gap: 0.75rem;
@@ -319,7 +311,6 @@ body {
   line-height: 1;
 }
 
-/* DAILY FORECAST */
 .days-container {
   display: flex;
   flex-direction: column;
@@ -365,7 +356,6 @@ body {
   min-width: 70px;
 }
 
-/* FOOTER */
 .app-footer {
   text-align: center;
   font-size: 0.75rem;
@@ -389,9 +379,6 @@ body {
   opacity: 0.8;
 }
 
-/* ============= RESPONSIVE DESIGN ============= */
-
-/* TABLETS (640px y superior) */
 @media (min-width: 640px) {
   .app-header {
     padding: 2rem 1.5rem 1rem;
@@ -462,7 +449,6 @@ body {
   }
 }
 
-/* DESKTOP (1024px y superior) */
 @media (min-width: 1024px) {
   .app-header {
     padding: 2.5rem 2rem 1rem;
@@ -501,22 +487,21 @@ body {
 
   .card h2 {
     font-size: 1.1rem;
-  }header-content {
+  }
+}
+
+@media (max-width: 359px) {
+  .app-header {
+    padding: 1rem 0.75rem 0.5rem;
+  }
+
+  .header-content {
     gap: 0.5rem;
   }
 
   .app-logo {
     width: 40px;
     height: 40px;
-  }
-
-  .
-}
-
-/* SMALL SCREENS (menos de 360px) */
-@media (max-width: 359px) {
-  .app-header {
-    padding: 1rem 0.75rem 0.5rem;
   }
 
   .app-header h1 {
@@ -565,7 +550,6 @@ body {
   }
 }
 
-/* ACCESSIBILITY */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -575,14 +559,12 @@ body {
   }
 }
 
-/* DARK MODE / LIGHT MODE (si el sistema lo detecta) */
 @media (prefers-color-scheme: dark) {
   body {
     background: radial-gradient(circle at top, #1f2937, #020617 55%);
   }
 }
 
-/* TOUCH DEVICES */
 @media (hover: none) and (pointer: coarse) {
   .carousel-btn {
     min-width: 44px;
