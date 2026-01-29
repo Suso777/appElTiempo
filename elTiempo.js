@@ -1,7 +1,7 @@
 const LATITUDE = 43.213;
 const LONGITUDE = -8.689;
 
-const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&current_weather=true&hourly=temperature_2m,weathercode,relative_humidity_2m&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
+const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&current_weather=true&hourly=temperature_2m,weathercode,relative_humidity_2m,precipitation_probability&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset&timezone=auto`;
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchWeather();
@@ -54,6 +54,30 @@ function initializeAudio() {
   });
 }
 
+  function changeBackgroundVideo(weatherCode) {
+    const video = document.getElementById("bg-video");
+    let videoPath = "videos/videoEla.mp4";
+
+    // Códigos de sol: 0, 1, 2
+    if ([0, 1, 2].includes(weatherCode)) {
+      videoPath = "videos/videoBoTempo.mp4";
+    }
+    // Códigos de nublado: 3, 45, 48
+    else if ([3, 45, 48].includes(weatherCode)) {
+      videoPath = "videos/tempoNublado.mp4";
+    }
+    // Lluvia, tormenta, nieve: todo lo demás
+    // 51, 53, 55 (llovizna), 61, 63, 65 (lluvia), 71, 73, 75 (nieve), 80, 81, 82 (chubascos), 95, 96, 99 (tormenta)
+    else {
+      videoPath = "videos/videoEla.mp4";
+    }
+
+    // Solo cambiar si es diferente al actual
+    if (video.querySelector("source").src !== videoPath) {
+      video.querySelector("source").src = videoPath;
+      video.load();
+    }
+  }
 async function fetchWeather() {
   try {
     const response = await fetch(API_URL);
@@ -83,17 +107,26 @@ function renderCurrentWeather(data) {
   });
   
   const currentHumidity = currentIndex >= 0 ? hourly.relative_humidity_2m[currentIndex] : "--";
+  const currentPrecip = currentIndex >= 0 ? hourly.precipitation_probability[currentIndex] : "--";
+  
+  // Calcular índice de confort (Wind Chill simplificado)
+  const comfort = calculateComfortIndex(current.temperature, current.windspeed, currentHumidity);
 
   const tempElement = document.getElementById("current-temp");
   const descElement = document.getElementById("current-description");
+  const comfortElement = document.getElementById("current-comfort");
   const windElement = document.getElementById("current-wind");
   const humidityElement = document.getElementById("current-humidity");
+  const precipElement = document.getElementById("current-precip");
   const updatedElement = document.getElementById("last-updated");
 
   tempElement.textContent = `${Math.round(current.temperature)}°C`;
+    changeBackgroundVideo(current.weathercode);
   descElement.textContent = mapWeatherCodeToText(current.weathercode);
+  comfortElement.textContent = `${Math.round(comfort)}°C`;
   windElement.textContent = `${Math.round(current.windspeed)} km/h`;
   humidityElement.textContent = `${currentHumidity}%`;
+  precipElement.textContent = `${currentPrecip}%`;
   updatedElement.textContent = `Actualizado: ${formatTime(current.time)}`;
 }
 
@@ -215,6 +248,21 @@ function formatDayName(isoString, isToday) {
     weekday: "short",
   });
   return dayName.charAt(0).toUpperCase() + dayName.slice(1);
+}
+
+function calculateComfortIndex(temp, windSpeed, humidity) {
+  // Índice de sensación térmica simplificado (Wind Chill + humedad)
+  // Wind Chill: 13.12 + 0.6215*T - 11.37*V^0.16 + 0.3965*T*V^0.16
+  // Simplificado: T - (windSpeed * 0.3) + (humedad * 0.1)
+  
+  if (temp > 10) {
+    // Para temperaturas cálidas: considerar humedad
+    return temp - (windSpeed * 0.15) + ((humidity - 50) * 0.02);
+  } else {
+    // Para temperaturas frías: wind chill más importante
+    const windChill = temp - (windSpeed * 0.3);
+    return windChill + ((humidity - 50) * 0.01);
+  }
 }
 
 function mapWeatherCodeToText(code) {

@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="video-background">
-      <video autoplay muted loop playsinline>
+      <video id="bg-video" autoplay muted loop playsinline>
         <source src="videos/videoEla.mp4" type="video/mp4" />
       </video>
     </div>
@@ -89,6 +89,12 @@
         <h2>Ahora mismo</h2>
         <p class="temp" id="current-temp">--°C</p>
         <p id="current-description">Cargando...</p>
+        
+        <div class="comfort-index">
+          <p class="comfort-label">Sensación térmica</p>
+          <p class="comfort-value" id="current-comfort">--°C</p>
+        </div>
+
         <div class="weather-details">
           <p class="detail-item">
             <span class="detail-icon">💨</span>
@@ -101,6 +107,12 @@
             <span id="current-humidity">--%</span>
           </p>
         </div>
+
+        <div class="precipitation-info">
+          <p class="precip-label">Probabilidad de lluvia</p>
+          <p class="precip-value" id="current-precip">--%</p>
+        </div>
+
         <p class="updated" id="last-updated">Actualizado: --</p>
       </section>
 
