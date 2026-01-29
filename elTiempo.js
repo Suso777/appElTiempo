@@ -130,9 +130,19 @@ function renderDailyForecast(data) {
     const dayCard = document.createElement("div");
     dayCard.classList.add("day-card");
 
+    const dayHeader = document.createElement("div");
+    dayHeader.classList.add("day-header");
+
     const dayName = document.createElement("p");
     dayName.classList.add("day-name");
     dayName.textContent = formatDayName(times[i], i === 0);
+
+    const dayIcon = document.createElement("span");
+    dayIcon.classList.add("day-icon");
+    dayIcon.textContent = getShortIcon(codes[i]);
+
+    dayHeader.appendChild(dayName);
+    dayHeader.appendChild(dayIcon);
 
     const dayDesc = document.createElement("p");
     dayDesc.classList.add("day-desc");
@@ -144,7 +154,7 @@ function renderDailyForecast(data) {
       maxTemps[i]
     )}°`;
 
-    dayCard.appendChild(dayName);
+    dayCard.appendChild(dayHeader);
     dayCard.appendChild(dayDesc);
     dayCard.appendChild(dayTemp);
     container.appendChild(dayCard);
@@ -175,9 +185,10 @@ function formatHour(isoString) {
 function formatDayName(isoString, isToday) {
   const date = new Date(isoString);
   if (isToday) return "Hoy";
-  return date.toLocaleDateString("es-ES", {
+  const dayName = date.toLocaleDateString("es-ES", {
     weekday: "short",
   });
+  return dayName.charAt(0).toUpperCase() + dayName.slice(1);
 }
 
 function mapWeatherCodeToText(code) {

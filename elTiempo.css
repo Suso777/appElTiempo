@@ -333,11 +333,21 @@ body {
   background-color: rgba(2, 6, 23, 0.95);
 }
 
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 100px;
+}
+
 .day-name {
   font-size: 0.95rem;
   font-weight: 600;
-  min-width: 60px;
   color: var(--text-main);
+}
+
+.day-icon {
+  font-size: 1.2rem;
 }
 
 .day-desc {
