@@ -54,9 +54,14 @@ function initializeAudio() {
   });
 }
 
+  let _currentWeatherCode = null;
+  let _revertTimeout = null;
+
   function changeBackgroundVideo(weatherCode) {
     const video = document.getElementById("bg-video");
-    let videoPath = "videos/videoEla.mp4";
+    if (!video) return;
+
+    let videoPath = "videos/videoEla.mp4"; // por defecto lluvia/tormenta
 
     // Códigos de sol: 0, 1, 2
     if ([0, 1, 2].includes(weatherCode)) {
@@ -66,17 +71,20 @@ function initializeAudio() {
     else if ([3, 45, 48].includes(weatherCode)) {
       videoPath = "videos/tempoNublado.mp4";
     }
-    // Lluvia, tormenta, nieve: todo lo demás
-    // 51, 53, 55 (llovizna), 61, 63, 65 (lluvia), 71, 73, 75 (nieve), 80, 81, 82 (chubascos), 95, 96, 99 (tormenta)
-    else {
-      videoPath = "videos/videoEla.mp4";
-    }
 
-    // Solo cambiar si es diferente al actual
-    if (video.querySelector("source").src !== videoPath) {
-      video.querySelector("source").src = videoPath;
-      video.load();
-    }
+    const sourceEl = video.querySelector("source");
+    if (!sourceEl) return;
+
+    // Comparar atributo src original para evitar recargas innecesarias
+    const currentSrcAttr = sourceEl.getAttribute("src");
+    if (currentSrcAttr === videoPath) return;
+
+    sourceEl.setAttribute("src", videoPath);
+    // Reiniciar reproducción manteniendo muted/autoplay/loop
+    const currentTime = video.currentTime || 0;
+    video.load();
+    video.currentTime = Math.min(currentTime, 1);
+    video.play().catch(() => {});
   }
 async function fetchWeather() {
   try {
@@ -121,7 +129,8 @@ function renderCurrentWeather(data) {
   const updatedElement = document.getElementById("last-updated");
 
   tempElement.textContent = `${Math.round(current.temperature)}°C`;
-    changeBackgroundVideo(current.weathercode);
+  _currentWeatherCode = current.weathercode;
+  changeBackgroundVideo(current.weathercode);
   descElement.textContent = mapWeatherCodeToText(current.weathercode);
   comfortElement.textContent = `${Math.round(comfort)}°C`;
   windElement.textContent = `${Math.round(current.windspeed)} km/h`;
@@ -216,6 +225,33 @@ function renderDailyForecast(data) {
     dayCard.appendChild(dayHeader);
     dayCard.appendChild(dayDesc);
     dayCard.appendChild(dayTemp);
+
+    // Guardar código meteorológico en dataset
+    dayCard.dataset.weathercode = codes[i];
+
+    // Hover / pointer: mostrar vídeo del día señalado
+    dayCard.addEventListener('pointerenter', () => {
+      if (_revertTimeout) {
+        clearTimeout(_revertTimeout);
+        _revertTimeout = null;
+      }
+      changeBackgroundVideo(Number(dayCard.dataset.weathercode));
+    });
+
+    dayCard.addEventListener('pointerleave', () => {
+      changeBackgroundVideo(_currentWeatherCode);
+    });
+
+    // Tocar / pulsar (móvil): cambia temporalmente y revierte tras 4s
+    dayCard.addEventListener('pointerdown', (e) => {
+      changeBackgroundVideo(Number(dayCard.dataset.weathercode));
+      if (_revertTimeout) clearTimeout(_revertTimeout);
+      _revertTimeout = setTimeout(() => {
+        changeBackgroundVideo(_currentWeatherCode);
+        _revertTimeout = null;
+      }, 4000);
+    });
+
     container.appendChild(dayCard);
   }
 }
