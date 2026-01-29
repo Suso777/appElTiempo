@@ -373,6 +373,14 @@ body {
   color: var(--accent);
   text-decoration: none;
   font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+  opacity: 0.9;
 }
 
 .app-footer a:active {
