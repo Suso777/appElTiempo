@@ -7,7 +7,25 @@ const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&lon
 document.addEventListener("DOMContentLoaded", () => {
   fetchWeather();
   initializeAudio();
+  setupCarouselControls();
 });
+
+// Configurar controles del carrusel
+function setupCarouselControls() {
+  const prevBtn = document.getElementById("prev-hour");
+  const nextBtn = document.getElementById("next-hour");
+  const container = document.getElementById("hours-container");
+
+  if (prevBtn && nextBtn && container) {
+    prevBtn.addEventListener("click", () => {
+      container.scrollBy({ left: -150, behavior: "smooth" });
+    });
+
+    nextBtn.addEventListener("click", () => {
+      container.scrollBy({ left: 150, behavior: "smooth" });
+    });
+  }
+}
 
 // Reproducir audio de fondo
 function initializeAudio() {
@@ -65,8 +83,19 @@ function renderHourlyForecast(data) {
   const temps = data.hourly.temperature_2m;
   const codes = data.hourly.weathercode;
 
-  const now = data.current_weather.time;
-  const startIndex = times.indexOf(now); // índice de la hora actual
+  // Obtener la hora actual en formato ISO
+  const currentTime = new Date(data.current_weather.time);
+  const currentHourISO = currentTime.toISOString().substring(0, 13) + ":00"; // Formato: "2025-01-29T14:00"
+
+  // Encontrar el índice más cercano a la hora actual
+  let startIndex = 0;
+  for (let i = 0; i < times.length; i++) {
+    if (times[i] >= currentHourISO) {
+      startIndex = i;
+      break;
+    }
+  }
+
   const hoursToShow = 12;
 
   for (
