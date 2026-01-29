@@ -6,7 +6,23 @@ const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&lon
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchWeather();
+  initializeAudio();
 });
+
+// Reproducir audio de fondo
+function initializeAudio() {
+  const bgAudio = document.getElementById("bg-audio");
+  bgAudio.volume = 0.5; // Volumen al 50%
+  
+  // Reproducir automáticamente (puede ser bloqueado por el navegador)
+  bgAudio.play().catch(() => {
+    // Si el navegador bloquea reproducción automática, reproducir al hacer click
+    document.addEventListener("click", () => {
+      bgAudio.play();
+      console.log("Audio iniciado por click del usuario");
+    }, { once: true });
+  });
+}
 
 async function fetchWeather() {
   try {
