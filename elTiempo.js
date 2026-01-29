@@ -188,3 +188,4 @@ function getShortIcon(code) {
   if ([95, 96, 99].includes(code)) return "⛈️";
   return "ℹ️";
 }
+

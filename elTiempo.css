@@ -24,6 +24,11 @@
   filter: brightness(0.3) blur(2px);
 }
 
+#bg-audio {
+  display: none;
+}
+
+
 .contenido {
   position: relative;
   z-index: 1;
