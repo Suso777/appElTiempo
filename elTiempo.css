@@ -97,6 +97,34 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
+.refresh-btn {
+  background: none;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.refresh-btn:hover {
+  border-color: var(--accent);
+  background-color: rgba(56, 189, 248, 0.1);
+  transform: scale(1.05);
+}
+
+.refresh-btn:active {
+  transform: scale(0.95);
+}
+
+.refresh-btn.spinning svg {
+  animation: spin 1s linear;
+}
+
 .header-text {
   text-align: center;
 }
@@ -142,6 +170,13 @@ body {
   border: 1px solid rgba(148, 163, 184, 0.2);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 48px rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 .card h2 {
@@ -176,14 +211,40 @@ body {
   color: var(--text-main);
 }
 
-.current-weather .extra,
+.weather-details {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1rem 0;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.detail-icon {
+  font-size: 1.2rem;
+}
+
+.detail-label {
+  color: var(--text-muted);
+}
+
+.detail-item span:last-child {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
 .current-weather .updated {
   font-size: 0.85rem;
   color: var(--text-muted);
   line-height: 1.4;
-}
-
-.current-weather .updated {
   margin-top: 0.5rem;
 }
 
@@ -292,6 +353,8 @@ body {
 .hour-card:hover {
   background-color: rgba(2, 6, 23, 0.95);
   border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(56, 189, 248, 0.1);
 }
 
 .hour-time {
@@ -327,6 +390,14 @@ body {
   border: 1px solid rgba(148, 163, 184, 0.2);
   transition: all 0.2s ease;
   min-height: 55px;
+  cursor: pointer;
+}
+
+.day-card:hover {
+  background-color: rgba(2, 6, 23, 0.95);
+  border-color: rgba(56, 189, 248, 0.3);
+  transform: translateX(4px);
+  box-shadow: 0 8px 16px rgba(56, 189, 248, 0.1);
 }
 
 .day-card:active {

@@ -74,6 +74,13 @@
           <h1>O TEMPO</h1>
           <p id="location-name">Carballo, Galicia</p>
         </div>
+        <button class="refresh-btn" id="refresh-btn" aria-label="Refrescar datos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6"></path>
+            <path d="M1 20v-6h6"></path>
+            <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"></path>
+          </svg>
+        </button>
       </div>
     </header>
 
@@ -82,7 +89,18 @@
         <h2>Ahora mismo</h2>
         <p class="temp" id="current-temp">--°C</p>
         <p id="current-description">Cargando...</p>
-        <p class="extra" id="current-extra">Viento: -- km/h</p>
+        <div class="weather-details">
+          <p class="detail-item">
+            <span class="detail-icon">💨</span>
+            <span class="detail-label">Viento:</span>
+            <span id="current-wind">-- km/h</span>
+          </p>
+          <p class="detail-item">
+            <span class="detail-icon">💧</span>
+            <span class="detail-label">Humedad:</span>
+            <span id="current-humidity">--%</span>
+          </p>
+        </div>
         <p class="updated" id="last-updated">Actualizado: --</p>
       </section>
 

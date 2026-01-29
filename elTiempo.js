@@ -1,12 +1,13 @@
 const LATITUDE = 43.213;
 const LONGITUDE = -8.689;
 
-const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&current_weather=true&hourly=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
+const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&current_weather=true&hourly=temperature_2m,weathercode,relative_humidity_2m&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`;
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchWeather();
   initializeAudio();
   setupCarouselControls();
+  setupRefreshButton();
 });
 
 function setupCarouselControls() {
@@ -21,6 +22,19 @@ function setupCarouselControls() {
 
     nextBtn.addEventListener("click", () => {
       container.scrollBy({ left: 150, behavior: "smooth" });
+    });
+  }
+}
+
+function setupRefreshButton() {
+  const refreshBtn = document.getElementById("refresh-btn");
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", () => {
+      refreshBtn.classList.add("spinning");
+      fetchWeather();
+      setTimeout(() => {
+        refreshBtn.classList.remove("spinning");
+      }, 1000);
     });
   }
 }
@@ -59,15 +73,27 @@ async function fetchWeather() {
 
 function renderCurrentWeather(data) {
   const current = data.current_weather;
+  const hourly = data.hourly;
+  
+  // Encontrar el índice de la hora actual
+  const currentIndex = hourly.time.findIndex(time => {
+    const timeObj = new Date(time);
+    const currentObj = new Date(current.time);
+    return timeObj.getHours() === currentObj.getHours();
+  });
+  
+  const currentHumidity = currentIndex >= 0 ? hourly.relative_humidity_2m[currentIndex] : "--";
 
   const tempElement = document.getElementById("current-temp");
   const descElement = document.getElementById("current-description");
-  const extraElement = document.getElementById("current-extra");
+  const windElement = document.getElementById("current-wind");
+  const humidityElement = document.getElementById("current-humidity");
   const updatedElement = document.getElementById("last-updated");
 
   tempElement.textContent = `${Math.round(current.temperature)}°C`;
   descElement.textContent = mapWeatherCodeToText(current.weathercode);
-  extraElement.textContent = `Viento: ${Math.round(current.windspeed)} km/h`;
+  windElement.textContent = `${Math.round(current.windspeed)} km/h`;
+  humidityElement.textContent = `${currentHumidity}%`;
   updatedElement.textContent = `Actualizado: ${formatTime(current.time)}`;
 }
 
